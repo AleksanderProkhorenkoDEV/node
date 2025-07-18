@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from "node:http";
+import { createUser, listUser } from "./http/userController";
 
 type RequestHandler = (req: IncomingMessage, res: ServerResponse) => void;
 
@@ -11,9 +12,9 @@ type RoutesApi = {
 
 export const routesApi: RoutesApi = {
   GET: {
-    "/list-user": (req, res) => {
-      console.log("se acabo");
-      res.end();
-    },
+    "/list-user": listUser,
+  },
+  POST: {
+    "/create-user": createUser,
   },
 };
