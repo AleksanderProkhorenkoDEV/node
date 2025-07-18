@@ -19,6 +19,6 @@ export class UserRepository implements IUserRepository {
   async findAll(): Promise<User[]> {
     const usersRaw = this.users;
     await sleep(1000);
-    return usersRaw.map((userRaw) => new User(userRaw));
+    return usersRaw.map((userRaw) => User.fromJson(userRaw));
   }
 }
