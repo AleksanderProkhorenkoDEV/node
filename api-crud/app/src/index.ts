@@ -1,18 +1,12 @@
-import http from "node:http";
-import { routesApi } from "./routes";
+import { createUser, listUser } from "./http/userController";
+import { Server } from "./server/server";
 
-const server = http.createServer();
+const server = new Server();
 
-server.on("request", (req, res) => {
-  const method = req.method;
+server.addRoutes("GET", "/list-users", listUser);
 
-  const handler = routesApi[method]?.[req.url];
+server.addRoutes("POST", "/create-user", createUser);
 
-  if (handler) {
-    handler(req, res);
-  } else {
-    res.writeHead(404);
-    res.end("Not Found");
-  }
+server.start(3000, () => {
+  console.log("Server running on port 3000");
 });
-server.listen(process.env.PORT);
