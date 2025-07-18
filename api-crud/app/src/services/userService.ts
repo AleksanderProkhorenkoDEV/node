@@ -6,10 +6,12 @@ export class UserService {
   constructor(private repository: IUserRepository) {}
 
   createUser = async (userData: Omit<IUser, "id">): Promise<User> => {
-    const user = new User({
-      ...userData,
-      id: crypto.randomUUID(),
-    });
+    const user = new User(
+      crypto.randomUUID(),
+      userData.name,
+      userData.lastName,
+      userData.email
+    );
 
     await this.repository.save(user);
     return user;
