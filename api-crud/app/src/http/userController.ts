@@ -7,7 +7,6 @@ const service = new UserService(repository);
 export const listUser = async (req: any, res: any) => {
   try {
     const users = await service.findAll();
-    console.log(users);
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(users.map((user) => user.toJson())));
   } catch (error) {
