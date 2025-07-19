@@ -2,7 +2,7 @@ import http, { IncomingMessage, ServerResponse } from "node:http";
 
 type RequestHandler = (req: IncomingMessage, res: ServerResponse) => void;
 
-type HttpMethod = "GET" | "POST";
+type HttpMethod = "GET" | "POST" | "PUT";
 
 type Routes = {
   method: HttpMethod;

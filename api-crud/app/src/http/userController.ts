@@ -1,10 +1,14 @@
 import { UserRepository } from "../repository/userRepository";
 import { UserService } from "../services/userService";
+import http from "node:http";
 
 const repository = new UserRepository();
 const service = new UserService(repository);
 
-export const listUser = async (req: any, res: any) => {
+export const listUser = async (
+  req: http.IncomingMessage,
+  res: http.ServerResponse
+) => {
   try {
     const users = await service.findAll();
     res.writeHead(200, { "Content-Type": "application/json" });

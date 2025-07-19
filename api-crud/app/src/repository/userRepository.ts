@@ -1,5 +1,5 @@
 import { User } from "../entities/Users";
-import { IUser } from "../Types/user";
+import { IUser } from "../types/user";
 import { sleep } from "../utils/helpers";
 
 export interface IUserRepository {

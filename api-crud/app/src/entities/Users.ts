@@ -1,4 +1,4 @@
-import { IUser } from "../Types/user";
+import { IUser } from "../types/user";
 
 export class User {
   constructor(
