@@ -1,14 +1,11 @@
 import { UserRepository } from "../repository/userRepository";
+import { GetRequest, PostRequest } from "../types/routes";
 import { UserService } from "../services/userService";
-import http from "node:http";
 
 const repository = new UserRepository();
 const service = new UserService(repository);
 
-export const listUser = async (
-  req: http.IncomingMessage,
-  res: http.ServerResponse
-) => {
+export const listUser: GetRequest = async ({ res, params }) => {
   try {
     const users = await service.findAll();
     res.writeHead(200, { "Content-Type": "application/json" });
@@ -19,7 +16,7 @@ export const listUser = async (
   }
 };
 
-export const createUser = async (req: any, res: any) => {
+export const createUser: PostRequest = async ({ req, res }) => {
   let body = "";
   req.on("data", (chunk) => (body += chunk.toString()));
 
@@ -40,4 +37,8 @@ export const createUser = async (req: any, res: any) => {
       res.end(JSON.stringify({ error: error.message }));
     }
   });
+};
+
+export const updateUser: PostRequest = async ({ req, res }) => {
+  res.end();
 };
