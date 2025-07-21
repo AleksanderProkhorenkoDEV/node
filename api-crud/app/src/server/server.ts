@@ -1,5 +1,11 @@
 import http from "node:http";
-import { HttpMethod, RequestHandler, Router } from "./router";
+import { Router } from "./router";
+import {
+  GetRequest,
+  HttpMethod,
+  PostRequest,
+  RequestHandler,
+} from "../types/routes";
 
 export class Server {
   private server: http.Server;
@@ -16,6 +22,37 @@ export class Server {
     const url = new URL(req.url || "", `http://${req.headers.host}`);
     const path = url.pathname;
     const method = req.method as HttpMethod;
+
+    const route = this.routes.searchRoute(method, path);
+
+    if (!route) {
+      res.writeHead(404, {
+        "Content-Type": "application/json",
+      });
+      return res.end(
+        JSON.stringify({
+          error: "Route not found",
+          path: req.url,
+          statusCode: 404,
+        })
+      );
+    }
+
+    const params = this.routes.extractParams(url, route);
+
+    if (method === "GET") {
+      const handler = route.handler as GetRequest;
+      handler({
+        res: res,
+        params: url.searchParams,
+      });
+    } else {
+      const handler = route.handler as PostRequest;
+      handler({
+        res: res,
+        req: req,
+      });
+    }
   }
 
   addRoutes(method: HttpMethod, path: string, handler: RequestHandler) {
