@@ -5,7 +5,7 @@ export type RequestHandler = GetRequest | PostRequest;
 
 type GetHandleParams = {
   res: ServerResponse;
-  params?: URLSearchParams;
+  params?: Record<string, string>;
 };
 
 type PostHandleParams = {
