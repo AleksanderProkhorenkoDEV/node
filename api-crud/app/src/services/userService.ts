@@ -1,6 +1,6 @@
 import { IUserRepository } from "../repository/userRepository";
 import { User } from "../entities/Users";
-import { IUser } from "../types/user";
+import { IUser, UserQueryParams } from "../types/user";
 
 export class UserService {
   constructor(private repository: IUserRepository) {}
@@ -17,7 +17,11 @@ export class UserService {
     return user;
   };
 
-  findAll = async (): Promise<User[]> => {
-    return await this.repository.findAll();
+  findAll = async (queryParams: UserQueryParams): Promise<User[]> => {
+    return await this.repository.findAll(queryParams);
+  };
+
+  findUser = async (id: string): Promise<User> => {
+    return await this.repository.findUser(id);
   };
 }
