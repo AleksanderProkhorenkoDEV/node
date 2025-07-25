@@ -38,13 +38,13 @@ export class Server {
       );
     }
 
-    const params = this.routes.extractParams(url, route);
+    const mergeParams = this.routes.mergeParams(this.routes.extractParams(url, route), url.searchParams);
 
     if (method === "GET") {
       const handler = route.handler as GetRequest;
       handler({
         res: res,
-        params: url.searchParams,
+        params: mergeParams,
       });
     } else {
       const handler = route.handler as PostRequest;
