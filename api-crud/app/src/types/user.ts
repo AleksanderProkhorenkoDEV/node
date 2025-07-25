@@ -4,3 +4,10 @@ export type IUser = {
   lastName: string;
   email: string;
 };
+
+export interface UserQueryParams {
+  id?: number;
+  name?: string;
+  lastName?: string;
+  email?: string;
+}
