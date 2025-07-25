@@ -1,13 +1,15 @@
 import { UserRepository } from "../repository/userRepository";
 import { GetRequest, PostRequest } from "../types/routes";
 import { UserService } from "../services/userService";
+import { parseParamsUser } from "../utils/helpers";
 
 const repository = new UserRepository();
 const service = new UserService(repository);
 
 export const listUser: GetRequest = async ({ res, params }) => {
   try {
-    const users = await service.findAll();
+    const queryParams = parseParamsUser(params);
+    const users = await service.findAll(queryParams);
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(users.map((user) => user.toJson())));
   } catch (error) {
@@ -41,4 +43,16 @@ export const createUser: PostRequest = async ({ req, res }) => {
 
 export const updateUser: PostRequest = async ({ req, res }) => {
   res.end();
+};
+
+export const findUser: GetRequest = async ({ res, params }) => {
+  const user = await service.findUser("2");
+
+  if (!user) {
+    res.writeHead(404);
+    res.end(JSON.stringify({ error: "User not found" }));
+  }
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(user.toJson));
 };
