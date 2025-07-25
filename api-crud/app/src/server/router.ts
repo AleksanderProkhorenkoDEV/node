@@ -34,8 +34,8 @@ export class Router {
     return route;
   }
 
-  extractParams(url: URL, route: Route) {
-    let params: Record<string, string | number | boolean> = {};
+  extractParams(url: URL, route: Route): Record<string, string> {
+    let params: Record<string, string> = {};
     const pathParts = url.pathname.match(route.pattern).filter(Boolean);
     const dinamicKeys = route.path.match(route.pattern).filter(Boolean);
 
@@ -48,8 +48,17 @@ export class Router {
     for (const [key, value] of url.searchParams.entries()) {
       params[key] = value;
     }
-    console.log(params);
-    
+
     return params;
+  }
+
+  mergeParams(
+    routeParams: Record<string, string>,
+    searchParams: URLSearchParams
+  ): Record<string, string> {
+    return {
+      ...Object.fromEntries(searchParams.entries()), // Query params
+      ...routeParams, // Los parámetros de ruta tienen prioridad
+    };
   }
 }
