@@ -69,6 +69,13 @@ export class Server {
           params: mergeParams,
         });
         break;
+      case "DELETE":
+        const deleteHandler = route.handler as GetRequest;
+        deleteHandler({
+          res: res,
+          params: mergeParams,
+        });
+        break;
     }
   }
 
