@@ -13,27 +13,36 @@ _Basic API_ without a database that implements the GET, POST, PUT, and DELETE me
 
 ## ROUTES:
 
-    *GET*
+    **GET**
 
 | Route       | Headers                    | Query Params / params         |
 | ----------- | -------------------------- | ----------------------------- |
 | /list-users | Accept: "application/json" | ?name=""&lastName=""&email="" |
 | /user/:id   | Accept: "application/json" | id: string                    |
 
-    *POST*
+    **POST**
 
 | Route        | Headers                                                       | Body                                         |
 | ------------ | ------------------------------------------------------------- | -------------------------------------------- |
 | /create-user | Accept: "application/json" & Content-type: "application/json" | {name:string, lastName:string, email:string} |
 
-    *PUT*
+    **PUT**
 
 | Route            | Headers                                                       | Body                                            |
 | ---------------- | ------------------------------------------------------------- | ----------------------------------------------- |
 | /update-user/:id | Accept: "application/json" & Content-type: "application/json" | {name?:string, lastName?:string, email?:string} |
 
-    *DELETE*
+    **DELETE**
 
 | Route            | Headers                    |
 | ---------------- | -------------------------- |
 | /delete-user/:id | Accept: "application/json" |
+
+## HOW TO INSTALL:
+
+- mkdir api-crud
+  cd api-crud
+  git clone <repo-url>
+  pnpm i
+  docker-compose up -d --build
+-
