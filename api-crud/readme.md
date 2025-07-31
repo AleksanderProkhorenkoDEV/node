@@ -45,4 +45,4 @@ _Basic API_ without a database that implements the GET, POST, PUT, and DELETE me
   cd api-crud
   git clone <repo-url>
   pnpm i
-  docker-compose up -d --build```
+  docker-compose up -d --build
