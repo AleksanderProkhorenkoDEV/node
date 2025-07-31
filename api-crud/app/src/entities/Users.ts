@@ -3,9 +3,9 @@ import { IUser } from "../types/user";
 export class User {
   constructor(
     public readonly id: string,
-    public readonly name: string,
-    public readonly lastName: string,
-    public readonly email: string
+    public name: string,
+    public lastName: string,
+    public email: string
   ) {}
 
   isValid(): boolean {
@@ -21,6 +21,13 @@ export class User {
 
   static fromJson(json: IUser): User {
     return new User(json.id, json.name, json.lastName, json.email);
+  }
+
+  updateUser(user: Partial<Omit<User, "id">>): void {
+    if (!this.isValid()) throw new Error("User entity isn't valid");
+    this.name = user.name ?? this.name;
+    this.lastName = user.lastName ?? this.lastName;
+    this.email = user.email ?? this.email;
   }
 
   toJson(): IUser {

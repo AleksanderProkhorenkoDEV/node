@@ -6,6 +6,7 @@ export interface IUserRepository {
   save(user: User): Promise<void>;
   findAll(queryParams: UserQueryParams): Promise<User[]>;
   findUser(id: string): Promise<User>;
+  updateUser(user: User): Promise<boolean>;
 }
 
 export class UserRepository implements IUserRepository {
@@ -30,15 +31,24 @@ export class UserRepository implements IUserRepository {
     await sleep(1500);
   }
 
-  async findAll(queryParams: UserQueryParams): Promise<User[]> {    
+  async findAll(queryParams: UserQueryParams): Promise<User[]> {
     if (!queryParams) {
       return this.users.map((userRaw) => User.fromJson(userRaw));
     }
 
     const filterUsers = this.users.filter((user) => {
-      if (queryParams.name !== undefined && queryParams.name.toLowerCase !== user.name.toLowerCase) return false;
-      if (queryParams.lastName !== undefined && queryParams.lastName.toLowerCase !== user.lastName.toLowerCase) return false;
-      if (queryParams.email !== undefined && queryParams.email !== user.email) return false;
+      if (
+        queryParams.name !== undefined &&
+        queryParams.name.toLowerCase !== user.name.toLowerCase
+      )
+        return false;
+      if (
+        queryParams.lastName !== undefined &&
+        queryParams.lastName.toLowerCase !== user.lastName.toLowerCase
+      )
+        return false;
+      if (queryParams.email !== undefined && queryParams.email !== user.email)
+        return false;
 
       return true;
     });
@@ -51,5 +61,13 @@ export class UserRepository implements IUserRepository {
     const userRaw = this.users.find((user) => user.id === id);
     await sleep(1000);
     return User.fromJson(userRaw);
+  }
+
+  async updateUser(user: User) {
+    const index = this.users.findIndex((u) => u.id === user.id);
+    if (index === -1) return false;
+
+    this.users[index] = { ...this.users[index], ...user };
+    return true;
   }
 }
