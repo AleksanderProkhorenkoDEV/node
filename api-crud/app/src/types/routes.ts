@@ -13,5 +13,12 @@ type PostHandleParams = {
   req: IncomingMessage;
 };
 
+type PutHandleParams = {
+  res: ServerResponse;
+  req: IncomingMessage;
+  params: Record<string, string>;
+};
+
 export type GetRequest = (args: GetHandleParams) => void;
 export type PostRequest = (args: PostHandleParams) => void;
+export type PutRequest = (args: PutHandleParams) => void;
