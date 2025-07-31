@@ -24,4 +24,19 @@ export class UserService {
   findUser = async (id: string): Promise<User> => {
     return await this.repository.findUser(id);
   };
+
+  updateUser = async (id: string, newData: Omit<User, "id">): Promise<User> => {
+    const existUser = await this.findUser(id);
+    if (!existUser) throw new Error("User not found");
+    existUser.updateUser(newData);
+    const updateUser = await this.repository.updateUser(existUser);
+    if (!updateUser) throw new Error("Failed to update");
+    return existUser;
+  };
+
+  deleteUser = async (id: string): Promise<boolean> => {
+    const existUser = await this.findUser(id);
+    if (!existUser) throw new Error("User not found");
+    return await this.repository.deleteUser(id);
+  };
 }
