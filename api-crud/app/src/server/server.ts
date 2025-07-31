@@ -4,6 +4,7 @@ import {
   GetRequest,
   HttpMethod,
   PostRequest,
+  PutRequest,
   RequestHandler,
 } from "../types/routes";
 
@@ -38,20 +39,36 @@ export class Server {
       );
     }
 
-    const mergeParams = this.routes.mergeParams(this.routes.extractParams(url, route), url.searchParams);
+    const mergeParams = this.routes.mergeParams(
+      this.routes.extractParams(url, route),
+      url.searchParams
+    );
 
-    if (method === "GET") {
-      const handler = route.handler as GetRequest;
-      handler({
-        res: res,
-        params: mergeParams,
-      });
-    } else {
-      const handler = route.handler as PostRequest;
-      handler({
-        res: res,
-        req: req,
-      });
+    switch (method) {
+      case "GET":
+        const getHandler = route.handler as GetRequest;
+        getHandler({
+          res: res,
+          params: mergeParams,
+        });
+        break;
+      case "POST":
+        console.log("SE EJECUTA");
+
+        const postHandler = route.handler as PostRequest;
+        postHandler({
+          res: res,
+          req: req,
+        });
+        break;
+      case "PUT":
+        const putHandler = route.handler as PutRequest;
+        putHandler({
+          res: res,
+          req: req,
+          params: mergeParams,
+        });
+        break;
     }
   }
 
