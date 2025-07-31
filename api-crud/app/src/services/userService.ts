@@ -33,4 +33,10 @@ export class UserService {
     if (!updateUser) throw new Error("Failed to update");
     return existUser;
   };
+
+  deleteUser = async (id: string): Promise<boolean> => {
+    const existUser = await this.findUser(id);
+    if (!existUser) throw new Error("User not found");
+    return await this.repository.deleteUser(id);
+  };
 }

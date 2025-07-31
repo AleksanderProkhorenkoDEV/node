@@ -76,3 +76,12 @@ export const findUser: GetRequest = async ({ res, params }) => {
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(JSON.stringify(user));
 };
+
+export const deleteUser: GetRequest = async ({ res, params }) => {
+  try {
+    await service.deleteUser(params.id);
+    res.writeHead(204).end();
+  } catch (error) {
+    res.writeHead(404).end(JSON.stringify({ error: error }));
+  }
+};

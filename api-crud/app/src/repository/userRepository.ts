@@ -7,6 +7,7 @@ export interface IUserRepository {
   findAll(queryParams: UserQueryParams): Promise<User[]>;
   findUser(id: string): Promise<User>;
   updateUser(user: User): Promise<boolean>;
+  deleteUser(id: string): Promise<boolean>;
 }
 
 export class UserRepository implements IUserRepository {
@@ -68,6 +69,13 @@ export class UserRepository implements IUserRepository {
     if (index === -1) return false;
 
     this.users[index] = { ...this.users[index], ...user };
+    return true;
+  }
+
+  async deleteUser(id: string) {
+    const index = this.users.findIndex((u) => u.id === id);
+    if (index === -1) throw new Error("User not found");
+    this.users.splice(index, 1);
     return true;
   }
 }
