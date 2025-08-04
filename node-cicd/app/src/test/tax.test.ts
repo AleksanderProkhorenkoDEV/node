@@ -12,7 +12,7 @@ describe("Calculate tax IVA", () => {
 
   it("Throw error if the param is negative", () => {
     expect(() => calculateIVA(-50)).toThrow(
-      "Throw error if the param is negative"
+      "The price need be positive"
     );
   });
 });
