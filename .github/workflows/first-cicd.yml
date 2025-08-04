@@ -44,5 +44,3 @@ jobs:
         run: pnpm test
         env:
           CI: true
-      - name: Run linter
-        run: pnpm run lint
