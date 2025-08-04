@@ -3,8 +3,12 @@ name: Node.js CI
 on:
   push:
     branches: ["main"]
+    paths:
+      - "node-cicd/app/**" 
   pull_request:
     branches: ["main"]
+    paths:
+      - "node-cicd/app/**"
 
 jobs:
   test:
@@ -13,13 +17,16 @@ jobs:
 
     strategy:
       matrix:
-        project: [node-cicd/app/]
-        node-version: [22.x]
+        node-version: [20.x] 
+
+    defaults:
+      run:
+        working-directory: ./node-cicd/app 
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -28,8 +35,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm" # Cambiado a pnpm
-          cache-dependency-path: ${{ matrix.project }}/pnpm-lock.yaml
+          cache: "pnpm"
+          cache-dependency-path: "node-cicd/app/pnpm-lock.yaml"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -40,8 +47,10 @@ jobs:
       - name: Run tests
         run: pnpm test
         env:
-          CI: true # Importante para Jest en entornos CI
+          CI: true
+
       - name: Check types
         run: pnpm run type-check
+
       - name: Run linter
         run: pnpm run lint
