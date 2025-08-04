@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [23-alpine]
+        node-version: [23.x]
 
     steps:
       - uses: actions/checkout@v4
