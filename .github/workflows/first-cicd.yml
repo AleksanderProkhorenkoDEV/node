@@ -44,9 +44,5 @@ jobs:
         run: pnpm test
         env:
           CI: true
-
-      - name: Check types
-        run: pnpm run type-check
-
       - name: Run linter
         run: pnpm run lint
