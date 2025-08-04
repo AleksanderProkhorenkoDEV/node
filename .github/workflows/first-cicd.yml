@@ -3,12 +3,8 @@ name: Node.js CI
 on:
   push:
     branches: ["main"]
-    paths:
-      - "node-cicd/app/**" 
   pull_request:
     branches: ["main"]
-    paths:
-      - "node-cicd/app/**"
 
 jobs:
   test:
