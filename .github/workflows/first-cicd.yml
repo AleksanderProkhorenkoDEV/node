@@ -2,9 +2,13 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+    path:
+      - "/node-cicd/**"
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+    path:
+      - "/node-cicd/**"
 
 jobs:
   test:
@@ -13,34 +17,33 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
-    
+        node-version: [23-alpine]
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'pnpm'  # Cambiado a pnpm
-    
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8
-        run_install: false
-    
-    - name: Install dependencies
-      run: pnpm install --frozen-lockfile
-    
-    - name: Run build (if present)
-      run: pnpm run build --if-present
-    
-    - name: Run tests
-      run: pnpm test
-      env:
-        CI: true  # Importante para Jest en entornos CI
-    - name: Check types
-      run: pnpm run type-check
-    - name: Run linter
-      run: pnpm run lint
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm" # Cambiado a pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run build (if present)
+        run: pnpm run build --if-present
+
+      - name: Run tests
+        run: pnpm test
+        env:
+          CI: true # Importante para Jest en entornos CI
+      - name: Check types
+        run: pnpm run type-check
+      - name: Run linter
+        run: pnpm run lint
