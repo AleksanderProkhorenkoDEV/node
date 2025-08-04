@@ -13,14 +13,12 @@ jobs:
 
     strategy:
       matrix:
-        project: [node-cicd/app]
+        project: [node-cicd/app/]
         node-version: [22.x]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Get project directory
-        id: project-dir
-        run: echo "dir=${{ matrix.project }}" >> $GITHUB_OUTPUT
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
