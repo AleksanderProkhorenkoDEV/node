@@ -17,7 +17,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./node-strategy/app
+        working-directory: ./node-strategy-pattern/app
 
     steps:
       - uses: actions/checkout@v4
