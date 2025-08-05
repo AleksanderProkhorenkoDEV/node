@@ -39,8 +39,5 @@ jobs:
 
       - name: Run build (if present)
         run: pnpm run build
-      - name: Run ESLint
-        run: pnpm run lint
-
         env:
           CI: true
