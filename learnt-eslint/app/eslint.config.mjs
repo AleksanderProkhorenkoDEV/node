@@ -1,14 +1,14 @@
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import tseslint from "typescript-eslint";
 import globals from "globals";
 import js from "@eslint/js";
 
 export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    files: ["**/*.{ts}"],
     plugins: { js },
     extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser },
+    languageOptions: { globals: globals.node },
   },
   {
     rules: {
@@ -20,5 +20,6 @@ export default defineConfig([
       "no-unneeded-ternary": "error",
     },
   },
-  tseslint.configs.recommended,
+  globalIgnores(["node_modules/"]),
+  tseslint.configs.strictTypeChecked,
 ]);
