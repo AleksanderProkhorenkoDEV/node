@@ -5,21 +5,24 @@ import js from "@eslint/js";
 
 export default defineConfig([
   {
-    files: ["**/*.{ts}"],
+    files: ["src/**/*.{ts}"],
     plugins: { js },
     extends: ["js/recommended"],
-    languageOptions: { globals: globals.node },
+    languageOptions: { globals: globals.node }
   },
   {
     rules: {
+      //Basic rules
+      "comma-dangle": "warn",
+      indent: ["warn", "tap"],
       "no-import-assign": "error",
       "no-unassigned-vars": "error",
       "no-unused-vars": "error",
       "no-console": "warn",
       "no-magic-numbers": "warn",
-      "no-unneeded-ternary": "error",
+      "no-unneeded-ternary": "error"
     },
   },
   globalIgnores(["node_modules/"]),
-  tseslint.configs.strictTypeChecked,
+  tseslint.configs.recommended,
 ]);
