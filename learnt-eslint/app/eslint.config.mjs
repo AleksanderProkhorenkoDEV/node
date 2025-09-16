@@ -8,7 +8,7 @@ export default defineConfig([
     files: ["src/**/*.{ts}"],
     plugins: { js },
     extends: ["js/recommended"],
-    languageOptions: { globals: globals.node }
+    languageOptions: { globals: globals.node },
   },
   {
     rules: {
@@ -20,7 +20,7 @@ export default defineConfig([
       "no-unused-vars": "error",
       "no-console": "warn",
       "no-magic-numbers": "warn",
-      "no-unneeded-ternary": "error"
+      "no-unneeded-ternary": "error",
     },
   },
   globalIgnores(["node_modules/"]),
